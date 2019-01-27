@@ -73,7 +73,7 @@ print(metrics.accuracy_score(y_test,y_pred))
 print(metrics.roc_auc_score(y_test,y_pred))
 #TODO: perform cross validation
 
-print(cross_val_score(clf, X_train, y_train, cv=3))
+print(cross_val_score(clf, X_train, y_train, cv=7))
 
 #TODO: Explain what all the hyperparameters do
 
@@ -85,19 +85,35 @@ from hyperopt import STATUS_OK
 initial_params = clf.get_params()
 print(initial_params)
 
-def objective(params, cv = 3, X_train, y_train):
+clf.set_params(**initial_params)
+
+#print(type(str(initial_params)))
+print(cross_val_score(clf, X_train, y_train, cv=7))
+
+
+def the_objective(params, X_train_s, y_train_s, X_test, y_test, cv = 3):
        '''
        :param params: Random Forest Params
        :param cv: Cross Validation folds
        :return:
        '''
 
-       clf =  RandomForestClassifier()
-       clf.set_params(params)
-       cross_val_score(clf, X_train, y_train, cv)
+       clf_ =  RandomForestClassifier()
+       clf_.set_params(**params)
+       clf_.fit(X_train_s,y_train_s)
+       y_pred = clf_.predict(X_test)
+       accuracy_score =  metrics.accuracy_score(y_test, y_pred)
+       accuracy_inverse = 1 - accuracy_score
+       #best = cv_results.mean()
+       #print(cv_results)
+       return accuracy_score
+
+#define space
+#run tunning
+#get results for best
 
 
-       #cv_results =
+the_objective(params = initial_params, X_train_s = X_train,y_train_s = y_train,X_test = X_test, y_test = y_test,  cv = 6)
 
 
 #TODO: Train Logistic Regression
