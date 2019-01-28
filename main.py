@@ -172,7 +172,7 @@ df_best = df_best.drop(['params'], axis = 1)
 print(df_best.head())
 
 df_best['iteration'] = df_best.index + 1
-
+ls
 print(df_best.columns)
 
 import matplotlib.pyplot as plt
