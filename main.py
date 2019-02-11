@@ -100,7 +100,7 @@ def the_objective(params, X_train_s = X_train,y_train_s = y_train,X_test = X_tes
        :return:
        '''
 
-       clf_ =  RandomForestClassifier()
+       clf_ =  RandomForestClassifier(n_jobs = 8 )
        clf_.set_params(**params)
        print("Trying the set of paras {}".format(params))
        clf_.fit(X_train_s,y_train_s)
@@ -156,7 +156,7 @@ from hyperopt import Trials, tpe, fmin
 
 bayes_trials = Trials()
 
-best = fmin(fn = the_objective, space = bayes_space, algo = tpe.suggest, max_evals = 50, trials= bayes_trials)
+best = fmin(fn = the_objective, space = bayes_space, algo = tpe.suggest, max_evals = 100, trials= bayes_trials)
 
 print(best)
 
